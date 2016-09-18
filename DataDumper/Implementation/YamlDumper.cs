@@ -6,7 +6,7 @@ using YamlDotNet.Serialization;
 
 namespace DataDumper.Implementation
 {
-    public class YamlDumper : IDisposable, IDumper
+    internal class YamlDumper : IDisposable, IDumper
     {
         private readonly Serializer _serializer = new Serializer();
         private readonly StreamWriter _sw;
