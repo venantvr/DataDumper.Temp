@@ -6,13 +6,13 @@ using DataDumper.Interfaces;
 
 namespace DataDumper.Repository
 {
-    public class BaseDumpRepository : IDisposable
+    public abstract class AbstractDumpRepository : IDisposable
     {
         private readonly IDumper _dumper;
 
         private readonly Dictionary<Type, Dictionary<string, Func<object>>> _registry;
 
-        public BaseDumpRepository(IDumper dumper)
+        protected AbstractDumpRepository(IDumper dumper)
         {
             _dumper = dumper;
             _registry = new Dictionary<Type, Dictionary<string, Func<object>>>();
@@ -41,19 +41,14 @@ namespace DataDumper.Repository
             _registry[type].Add(name, entity);
         }
 
-        //public void Dump<TEntity>(string name, Func<object> entity)
-        //{
-        //    _dumper?.Dump(name, entity.Invoke());
-        //}
-
-        public Dictionary<string, Func<object>> LambdaValues(Type type)
+        public Dictionary<string, Func<object>> Delegates(Type type)
         {
             return _registry[type];
         }
 
         private void Flush()
         {
-            foreach (var obj in _registry.Keys.SelectMany(LambdaValues))
+            foreach (var obj in _registry.Keys.SelectMany(Delegates))
             {
                 _dumper?.Dump(obj.Key, obj.Value.Invoke());
             }

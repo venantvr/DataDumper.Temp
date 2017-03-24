@@ -1,66 +1,46 @@
 using System;
 using System.IO;
-using System.Security.Cryptography;
 using System.Text;
 using DataDumper.Implementation;
 using DataDumper.Repository;
-using DataDumper.Tests.Models;
+using DataDumper.Tests.Repository;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace DataDumper.Tests
 {
     [TestClass]
-    public class DataDumperTests
+    public class DataDumperTests : BaseDataDumperTests
     {
-        private string CalculateMd5Hash(string input)
-        {
-            var md5 = MD5.Create();
-
-            var inputBytes = Encoding.ASCII.GetBytes(input);
-            var hash = md5.ComputeHash(inputBytes);
-
-            var sb = new StringBuilder();
-
-            foreach (var t in hash)
-            {
-                sb.Append(t.ToString("X2"));
-            }
-
-            return sb.ToString();
-        }
-
         [TestMethod]
         public void Test_01()
         {
-            var client = new Client { LastName = "AAAA", FirstName = "BBBB" };
-
-            new YamlDumper(Console.OpenStandardOutput()).Dump("client", client);
+            new YamlDumper(Console.OpenStandardOutput()).Dump("Client", Client);
         }
 
         [TestMethod]
         public void Test_02()
         {
-            var stream = new MemoryStream();
-            var client = new Client { LastName = "AAAA", FirstName = "BBBB" };
+            using (var stream = new MemoryStream())
+            {
+                new YamlDumper(stream).Dump("Client", Client);
 
-            new YamlDumper(stream).Dump("Client", client);
+                var buffer = stream.GetBuffer();
 
-            var buffer = stream.GetBuffer();
-
-            Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "3657502FFDEE3E151EEAEB1610B59555");
+                Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "3657502FFDEE3E151EEAEB1610B59555");
+            }
         }
 
         [TestMethod]
         public void Test_03()
         {
-            var stream = new MemoryStream();
-            var client = new Client { LastName = "AAAA", FirstName = "BBBB" };
+            using (var stream = new MemoryStream())
+            {
+                new YamlDumper(stream).Dump(Client);
 
-            new YamlDumper(stream).Dump(client);
+                var buffer = stream.GetBuffer();
 
-            var buffer = stream.GetBuffer();
-
-            Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "3657502FFDEE3E151EEAEB1610B59555");
+                Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "3657502FFDEE3E151EEAEB1610B59555");
+            }
         }
 
         [TestMethod]
@@ -70,23 +50,24 @@ namespace DataDumper.Tests
             var j = 0;
             var k = 0;
 
-            var stream = new MemoryStream();
-
-            using (var repository = new BaseDumpRepository(new YamlDumper(stream)))
+            using (var stream = new MemoryStream())
             {
-                // ReSharper disable once AccessToModifiedClosure
-                repository.Add<int>("() => i + j", () => i + j);
-                // ReSharper disable once AccessToModifiedClosure
-                repository.Add<int>("() => i + k", () => i + k);
-                // ReSharper disable once AccessToModifiedClosure
-                repository.Add<int>("() => j + k", () => j + k);
+                using (var repository = new FakeDumpRepository(stream))
+                {
+                    // ReSharper disable once AccessToModifiedClosure
+                    repository.Add<int>("() => i + j", () => i + j);
+                    // ReSharper disable once AccessToModifiedClosure
+                    repository.Add<int>("() => i + k", () => i + k);
+                    // ReSharper disable once AccessToModifiedClosure
+                    repository.Add<int>("() => j + k", () => j + k);
 
-                i = 1;
+                    i = 1;
+                }
+
+                var buffer = stream.GetBuffer();
+
+                Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "96CB9836AFAE7484F011FBB2EF507E7D");
             }
-
-            var buffer = stream.GetBuffer();
-
-            Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "96CB9836AFAE7484F011FBB2EF507E7D");
         }
 
         [TestMethod]
@@ -96,9 +77,36 @@ namespace DataDumper.Tests
             var j = 0;
             var k = 0;
 
-            var stream = new MemoryStream();
+            using (var stream = new MemoryStream())
+            {
+                using (var repository = new TestDumpRepository(stream))
+                {
+                    // ReSharper disable once AccessToModifiedClosure
+                    repository.Add<int>("() => i + j", () => i + j);
+                    // ReSharper disable once AccessToModifiedClosure
+                    repository.Add<int>("() => i + k", () => i + k);
+                    // ReSharper disable once AccessToModifiedClosure
+                    repository.Add<int>("() => j + k", () => j + k);
 
-            using (var repository = new DumpRepository<MemoryStream>(stream))
+                    i = 1;
+                }
+
+                var buffer = stream.GetBuffer();
+
+                Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "96CB9836AFAE7484F011FBB2EF507E7D");
+            }
+        }
+
+        [TestMethod]
+        public void Test_06()
+        {
+            var i = 0;
+            var j = 0;
+            var k = 0;
+
+            var stream = Console.OpenStandardOutput();
+
+            using (var repository = new TestDumpRepository(stream))
             {
                 // ReSharper disable once AccessToModifiedClosure
                 repository.Add<int>("() => i + j", () => i + j);
@@ -109,10 +117,6 @@ namespace DataDumper.Tests
 
                 i = 1;
             }
-
-            var buffer = stream.GetBuffer();
-
-            Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "96CB9836AFAE7484F011FBB2EF507E7D");
         }
     }
 }
