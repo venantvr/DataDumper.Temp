@@ -12,7 +12,7 @@ namespace DataDumper.Console
 
             var stream = System.Console.OpenStandardOutput();
 
-            using (var repository = new TestDumpRepository(stream))
+            using (var repository = new DataDumperRepository(stream))
             {
                 // ReSharper disable once AccessToModifiedClosure
                 repository.Add<int>("() => i + j", () => i + j);

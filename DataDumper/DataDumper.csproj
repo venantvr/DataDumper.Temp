@@ -48,10 +48,10 @@
     <Compile Include="Attributes\DumpAsAttribute.cs" />
     <Compile Include="Interfaces\IDumper.cs" />
     <Compile Include="Implementation\YamlDumper.cs" />
-    <Compile Include="Repository\AbstractDumpRepository.cs" />
+    <Compile Include="Repository\AbstractDumperRepository.cs" />
     <Compile Include="Interfaces\IDumperLogic.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\TestDumpRepository.cs" />
+    <Compile Include="Repository\DataDumperRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

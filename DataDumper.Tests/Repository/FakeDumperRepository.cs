@@ -4,9 +4,9 @@ using DataDumper.Repository;
 
 namespace DataDumper.Tests.Repository
 {
-    public class FakeDumpRepository : AbstractDumpRepository
+    public class FakeDumperRepository : AbstractDumperRepository
     {
-        public FakeDumpRepository(Stream stream) : base(new YamlDumper(stream))
+        public FakeDumperRepository(Stream stream) : base(new YamlDumper(stream))
         {
         }
     }

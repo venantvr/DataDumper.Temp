@@ -6,13 +6,13 @@ using DataDumper.Interfaces;
 
 namespace DataDumper.Repository
 {
-    public abstract class AbstractDumpRepository : IDisposable
+    public abstract class AbstractDumperRepository : IDisposable
     {
         private readonly IDumper _dumper;
 
         private readonly Dictionary<Type, Dictionary<string, Func<object>>> _registry;
 
-        protected AbstractDumpRepository(IDumper dumper)
+        protected AbstractDumperRepository(IDumper dumper)
         {
             _dumper = dumper;
             _registry = new Dictionary<Type, Dictionary<string, Func<object>>>();

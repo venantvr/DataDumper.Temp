@@ -52,7 +52,7 @@ namespace DataDumper.Tests
 
             using (var stream = new MemoryStream())
             {
-                using (var repository = new FakeDumpRepository(stream))
+                using (var repository = new FakeDumperRepository(stream))
                 {
                     // ReSharper disable once AccessToModifiedClosure
                     repository.Add<int>("() => i + j", () => i + j);
@@ -79,7 +79,7 @@ namespace DataDumper.Tests
 
             using (var stream = new MemoryStream())
             {
-                using (var repository = new TestDumpRepository(stream))
+                using (var repository = new DataDumperRepository(stream))
                 {
                     // ReSharper disable once AccessToModifiedClosure
                     repository.Add<int>("() => i + j", () => i + j);
@@ -106,7 +106,7 @@ namespace DataDumper.Tests
 
             var stream = Console.OpenStandardOutput();
 
-            using (var repository = new TestDumpRepository(stream))
+            using (var repository = new DataDumperRepository(stream))
             {
                 // ReSharper disable once AccessToModifiedClosure
                 repository.Add<int>("() => i + j", () => i + j);
