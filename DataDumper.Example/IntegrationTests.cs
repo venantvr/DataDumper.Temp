@@ -11,7 +11,7 @@ namespace DataDumper.Example
     public class IntegrationTests
     {
         private readonly Stream _stream = Console.OpenStandardOutput();
-        private NorthwindContextBase _ctx;
+        private NorthWindContextBase _ctx;
 
         private DataDumperRepository _repository;
         private TransactionScope _transaction;
@@ -19,9 +19,9 @@ namespace DataDumper.Example
         [TestInitialize]
         public void Initialize()
         {
-            _repository = new DataDumperRepository(_stream);
-            _ctx = new NorthwindContextBase();
+            _ctx = new NorthWindContextBase();
             _transaction = new TransactionScope();
+            _repository = new DataDumperRepository(_stream);
         }
 
         [TestMethod]
@@ -32,9 +32,9 @@ namespace DataDumper.Example
         [TestCleanup]
         public void Cleanup()
         {
+            _repository.Dispose();
             _transaction.Dispose();
             _ctx.Dispose();
-            _repository.Dispose();
         }
     }
 }

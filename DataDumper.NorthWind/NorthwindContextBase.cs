@@ -4,13 +4,13 @@ using System.Data.Entity.Infrastructure;
 
 namespace DataDumper.NorthWind
 {
-    public class NorthwindContextBase : DbContext
+    public class NorthWindContextBase : DbContext
     {
-        public NorthwindContextBase()
+        public NorthWindContextBase()
         {
         }
 
-        public NorthwindContextBase(string nameOrConnectionString)
+        public NorthWindContextBase(string nameOrConnectionString)
             : base(nameOrConnectionString)
         {
         }
