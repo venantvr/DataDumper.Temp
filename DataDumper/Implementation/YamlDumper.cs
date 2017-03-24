@@ -1,12 +1,15 @@
 ﻿using System;
 using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using DataDumper.Interfaces;
 using YamlDotNet.Serialization;
 
+[assembly: InternalsVisibleTo("DataDumper.Tests")]
+
 namespace DataDumper.Implementation
 {
-    public class YamlDumper : IDisposable, IDumper
+    internal class YamlDumper : IDisposable, IDumper
     {
         private readonly Serializer _serializer = new Serializer();
         private readonly StreamWriter _sw;
@@ -29,6 +32,8 @@ namespace DataDumper.Implementation
         {
             _sw.Close();
         }
+
+        public Stream BaseStream => _sw.BaseStream;
 
         public void Dump<T>(string name, T value)
         {

@@ -3,6 +3,7 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 using DataDumper.Implementation;
+using DataDumper.Repository;
 using DataDumper.Tests.Models;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -60,6 +61,58 @@ namespace DataDumper.Tests
             var buffer = stream.GetBuffer();
 
             Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "3657502FFDEE3E151EEAEB1610B59555");
+        }
+
+        [TestMethod]
+        public void Test_04()
+        {
+            var i = 0;
+            var j = 0;
+            var k = 0;
+
+            var stream = new MemoryStream();
+
+            using (var repository = new BaseDumpRepository(new YamlDumper(stream)))
+            {
+                // ReSharper disable once AccessToModifiedClosure
+                repository.Add<int>("() => i + j", () => i + j);
+                // ReSharper disable once AccessToModifiedClosure
+                repository.Add<int>("() => i + k", () => i + k);
+                // ReSharper disable once AccessToModifiedClosure
+                repository.Add<int>("() => j + k", () => j + k);
+
+                i = 1;
+            }
+
+            var buffer = stream.GetBuffer();
+
+            Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "96CB9836AFAE7484F011FBB2EF507E7D");
+        }
+
+        [TestMethod]
+        public void Test_05()
+        {
+            var i = 0;
+            var j = 0;
+            var k = 0;
+
+            var stream = new MemoryStream();
+
+            using (var repository = new DumpRepository<MemoryStream>(stream))
+            {
+                // ReSharper disable once AccessToModifiedClosure
+                repository.Add<int>("() => i + j", () => i + j);
+                // ReSharper disable once AccessToModifiedClosure
+                repository.Add<int>("() => i + k", () => i + k);
+                // ReSharper disable once AccessToModifiedClosure
+                repository.Add<int>("() => j + k", () => j + k);
+
+                i = 1;
+            }
+
+            var buffer = stream.GetBuffer();
+
+            Assert.IsTrue(CalculateMd5Hash(Encoding.UTF8.GetString(buffer, 0, buffer.Length)) == "96CB9836AFAE7484F011FBB2EF507E7D");
         }
     }
 }
