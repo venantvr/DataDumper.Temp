@@ -2,7 +2,6 @@
 using System.IO;
 using System.Reflection;
 using DataDumper.Interfaces;
-using YamlDotNet.Serialization;
 
 namespace DataDumper.Implementation
 {
