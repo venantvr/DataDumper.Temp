@@ -2,10 +2,11 @@
 using System.IO;
 using System.Reflection;
 using DataDumper.Interfaces;
+using YamlDotNet.Serialization;
 
 namespace DataDumper.Implementation
 {
-    internal class YamlDumper : IDisposable, IDumper
+    public class YamlDumper : IDisposable, IDumper
     {
         private readonly Serializer _serializer = new Serializer();
         private readonly StreamWriter _sw;
@@ -19,13 +20,25 @@ namespace DataDumper.Implementation
             _sw = new StreamWriter(path) { AutoFlush = true };
         }
 
+        public YamlDumper(Stream stream)
+        {
+            _sw = new StreamWriter(stream) { AutoFlush = true };
+        }
+
         public void Dispose()
         {
             _sw.Close();
         }
 
-        public void Dump(string name, object value)
+        public void Dump<T>(string name, T value)
         {
+            _serializer.Serialize(_sw, new { Name = name, Object = value });
+        }
+
+        public void Dump<T>(T value)
+        {
+            var name = typeof (T).Name;
+
             _serializer.Serialize(_sw, new { Name = name, Object = value });
         }
     }

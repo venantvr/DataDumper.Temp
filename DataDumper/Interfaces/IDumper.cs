@@ -4,6 +4,6 @@
     {
         void Dispose();
 
-        void Dump(string name, object value);
+        void Dump<T>(string name, T value);
     }
 }
