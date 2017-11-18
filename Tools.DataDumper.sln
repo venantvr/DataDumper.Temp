@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.DataDumper.Example", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.DataDumper.NorthWind", "Tools.DataDumper.NorthWind\Tools.DataDumper.NorthWind.csproj", "{7247AE18-3CEB-427A-A99A-FAF2B53372B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.DataDumper.Compare", "Tools.DataDumper.Compare\Tools.DataDumper.Compare.csproj", "{5FAB8705-C7A3-4979-B54D-9827939CC6F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tools.DataDumper.Compare.Tests", "Tools.DataDumper.Compare.Tests\Tools.DataDumper.Compare.Tests.csproj", "{9F717742-B201-43F5-8D6F-59218DEADF77}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +43,14 @@ Global
 		{7247AE18-3CEB-427A-A99A-FAF2B53372B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7247AE18-3CEB-427A-A99A-FAF2B53372B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7247AE18-3CEB-427A-A99A-FAF2B53372B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5FAB8705-C7A3-4979-B54D-9827939CC6F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5FAB8705-C7A3-4979-B54D-9827939CC6F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5FAB8705-C7A3-4979-B54D-9827939CC6F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5FAB8705-C7A3-4979-B54D-9827939CC6F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F717742-B201-43F5-8D6F-59218DEADF77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F717742-B201-43F5-8D6F-59218DEADF77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F717742-B201-43F5-8D6F-59218DEADF77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F717742-B201-43F5-8D6F-59218DEADF77}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

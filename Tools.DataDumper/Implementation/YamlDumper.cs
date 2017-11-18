@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 using Tools.DataDumper.Interfaces;
 using YamlDotNet.Serialization;
 
-[assembly: InternalsVisibleTo("DataDumper.Tests")]
+[assembly: InternalsVisibleTo("Tools.DataDumper.Tests")]
 
 namespace Tools.DataDumper.Implementation
 {

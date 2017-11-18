@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Tools.DataDumper.Implementation;
 using Tools.DataDumper.Repository;
 
 namespace Tools.DataDumper.Tests.Repository

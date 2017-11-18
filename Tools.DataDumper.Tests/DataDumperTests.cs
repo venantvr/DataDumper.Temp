@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Tools.DataDumper.Implementation;
 using Tools.DataDumper.Repository;
 using Tools.DataDumper.Tests.Repository;
 
