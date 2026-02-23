@@ -13,6 +13,4 @@ Utilitaires de dump et de comparaison de donnees .NET : diff JSON d'objets, expo
 
 ## Stack
 
-- C# / .NET
-- ObjectDiffPatch
-- JSON
+[![Stack](https://skillicons.dev/icons?i=dotnet,js,cs&theme=dark)](https://skillicons.dev)
